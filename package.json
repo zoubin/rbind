@@ -1,0 +1,28 @@
+{
+  "name": "rbind",
+  "version": "0.0.1",
+  "description": "Like Function.prototype.bind, but bind arguments of the right part rather than the left",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoubin/rbind.git"
+  },
+  "keywords": [
+    "function",
+    "bind",
+    "rbind"
+  ],
+  "author": "zoubin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zoubin/rbind/issues"
+  },
+  "homepage": "https://github.com/zoubin/rbind#readme",
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^4.0.0"
+  }
+}
