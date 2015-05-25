@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zoubin/rbind.git"
+    "url": "git+https://github.com/zoubin/xbind.git"
   },
   "keywords": [
     "function",
@@ -20,9 +20,9 @@
   "author": "zoubin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zoubin/rbind/issues"
+    "url": "https://github.com/zoubin/xbind/issues"
   },
-  "homepage": "https://github.com/zoubin/rbind#readme",
+  "homepage": "https://github.com/zoubin/xbind#readme",
   "devDependencies": {
     "faucet": "0.0.1",
     "tape": "^4.0.0"
