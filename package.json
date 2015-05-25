@@ -1,6 +1,6 @@
 {
   "name": "xbind",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Like Function.prototype.bind, but bind arguments of the right part rather than the left",
   "main": "index.js",
   "scripts": {
