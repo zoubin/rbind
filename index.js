@@ -1,3 +1,4 @@
+var arrayify = require('arrayify-slice');
 module.exports = xbind;
 module.exports.rbind = rbind;
 module.exports.sbind = sbind;
@@ -33,6 +34,3 @@ function sbind(f, c, start, deleteCount) {
     };
 }
 
-function arrayify(o, from, to) {
-    return Array.prototype.slice.call(o, from, to);
-}

@@ -26,5 +26,8 @@
   "devDependencies": {
     "faucet": "0.0.1",
     "tape": "^4.0.0"
+  },
+  "dependencies": {
+    "arrayify-slice": "^1.0.0"
   }
 }
