@@ -7,12 +7,10 @@ function xbind(f, c, start) {
     var xargs = arguments.length > 3 ? arrayify(arguments, 3) : null;
     return function () {
         var fn = typeof f === 'string' ? c[f] : f;
-        var args = arrayify(arguments);
-        if (args.length < start) {
-            start = args.length;
+        if (arguments.length < start) {
+            start = arguments.length;
         }
-        args = args.slice(0, start).concat(xargs || []);
-        return fn.apply(c || this, args);
+        return fn.apply(c || this, arrayify(arguments, 0, start).concat(xargs || []));
     };
 }
 
