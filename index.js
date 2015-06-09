@@ -3,34 +3,61 @@ module.exports = xbind;
 module.exports.rbind = rbind;
 module.exports.sbind = sbind;
 
-function xbind(f, c, start) {
-    start = start || 0;
-    var xargs = arguments.length > 3 ? arrayify(arguments, 3) : null;
+function xbind(c, f, start) {
+    var args = parseArgs(arguments);
+    var xargs = args.xargs;
+    f = args.fn;
+    c = args.ctx;
+    start = xargs.shift() || 0;
+
     return function () {
         var fn = typeof f === 'string' ? c[f] : f;
-        if (arguments.length < start) {
-            start = arguments.length;
-        }
-        return fn.apply(c || this, arrayify(arguments, 0, start).concat(xargs || []));
+        var cargs = arrayify(arguments);
+        cargs.splice.apply(cargs, [start, cargs.length].concat(xargs));
+        return fn.apply(c || this, cargs);
     };
 }
 
-function rbind(f, c) {
-    var xargs = arguments.length > 2 ? arrayify(arguments, 2) : null;
+function rbind(c, f) {
+    var args = parseArgs(arguments);
+    var xargs = args.xargs;
+    f = args.fn;
+    c = args.ctx;
+
     return function () {
         var fn = typeof f === 'string' ? c[f] : f;
-        var args = xargs ? arrayify(arguments).concat(xargs) : arguments;
-        return fn.apply(c || this, args);
+        var cargs = arrayify(arguments).concat(xargs);
+        return fn.apply(c || this, cargs);
     };
 };
 
-function sbind(f, c, start, deleteCount) {
-    var xargs = arguments.length > 4 ? arrayify(arguments, 4) : null;
+function sbind(c, f, start, deleteCount) {
+    var args = parseArgs(arguments);
+    var xargs = args.xargs;
+    f = args.fn;
+    c = args.ctx;
+
     return function () {
         var fn = typeof f === 'string' ? c[f] : f;
-        var args = arrayify(arguments);
-        args.splice.apply(args, [start, deleteCount].concat(xargs || []));
-        return fn.apply(c || this, args);
+        var cargs = arrayify(arguments);
+        cargs.splice.apply(cargs, xargs);
+        return fn.apply(c || this, cargs);
     };
 }
 
+function parseArgs(args) {
+    args = arrayify(args);
+    var f, c;
+    if (typeof args[0] !== 'function') {
+        c = args.shift();
+        f = args.shift();
+    } else {
+        c = null;
+        f = args.shift();
+    }
+    return {
+        fn: f,
+        ctx: c,
+        xargs: args
+    };
+}
