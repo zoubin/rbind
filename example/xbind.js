@@ -1,5 +1,5 @@
 var xbind = require('..');
 var path = require('path');
-console.log(['x.css', 'y.css'].map(xbind('basename', path, 1, '.css')));
+console.log(['x.css', 'y.css'].map(xbind(path, 'basename', 1, '.css')));
 // [ 'x', 'y' ]
 

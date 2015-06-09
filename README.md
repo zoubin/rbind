@@ -19,7 +19,7 @@ Return a new function like `Function.prototype.bind`, but the args are inserted 
 ```javascript
 var rbind = require('xbind').rbind;
 var path = require('path');
-console.log(rbind('basename', path, '.css')('x.css'));
+console.log(rbind(path, 'basename', '.css')('x.css'));
 // x
 
 ```
@@ -32,7 +32,7 @@ Like `rbind`, except that if the returned new function is called with more than 
 ```javascript
 var xbind = require('xbind');
 var path = require('path');
-console.log(['x.css', 'y.css'].map(xbind('basename', path, 1, '.css')));
+console.log(['x.css', 'y.css'].map(xbind(path, 'basename', 1, '.css')));
 // [ 'x', 'y' ]
 
 ```
@@ -46,7 +46,7 @@ The actual argument list is spliced by `Array.prototype.splice` called with `sta
 ```javascript
 var sbind = require('xbind').sbind;
 var path = require('path');
-console.log(['x.css', 'y.css'].map(sbind('basename', path, 1, 2, '.css')));
+console.log(['x.css', 'y.css'].map(sbind(path, 'basename', 1, 2, '.css')));
 // [ 'x', 'y' ]
 
 ```

@@ -1,5 +1,5 @@
 var rbind = require('..').rbind;
 var path = require('path');
-console.log(rbind('basename', path, '.css')('x.css'));
+console.log(rbind(path, 'basename', '.css')('x.css'));
 // x
 
