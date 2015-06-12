@@ -1,7 +1,7 @@
 var arrayify = require('arrayify-slice');
 module.exports = xbind;
-module.exports.rbind = rbind;
-module.exports.sbind = sbind;
+module.exports.r = module.exports.rbind = rbind;
+module.exports.s = module.exports.sbind = sbind;
 
 function xbind(c, f, start) {
     var args = parseArgs(arguments);

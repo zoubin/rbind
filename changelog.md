@@ -1,3 +1,7 @@
+# 0.2.3
+
+* `xbind.r`, `xbind.s`
+
 # 0.2.0
 
 * `xbind`, `rbind`, `sbind`, all receive the context object as the first argument (optional)

@@ -6,8 +6,8 @@ Like Function.prototype.bind, but with more features.
 
 ```javascript
 var xbind = require('xbind');
-var rbind = require('xbind').rbind;
-var sbind = require('xbind').sbind;
+var rbind = require('xbind').r;
+var sbind = require('xbind').s;
 ```
 
 ### rbind(ctx, fn, arg1, arg2,...)
@@ -17,7 +17,7 @@ Return a new function like `Function.prototype.bind`, but the args are inserted 
 * ctx: *Object* *Optional* Execution context for `fn`.
 
 ```javascript
-var rbind = require('xbind').rbind;
+var rbind = require('xbind').r;
 var path = require('path');
 console.log(rbind(path, 'basename', '.css')('x.css'));
 // x
@@ -44,7 +44,7 @@ The actual argument list is spliced by `Array.prototype.splice` called with `sta
 
 
 ```javascript
-var sbind = require('xbind').sbind;
+var sbind = require('xbind').s;
 var path = require('path');
 console.log(['x.css', 'y.css'].map(sbind(path, 'basename', 1, 2, '.css')));
 // [ 'x', 'y' ]
