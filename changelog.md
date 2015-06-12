@@ -1,3 +1,7 @@
+# 0.2.4
+
+* `xbind.l`, `xbind.lbind`
+
 # 0.2.3
 
 * `xbind.r`, `xbind.s`

@@ -7,7 +7,22 @@ Like Function.prototype.bind, but with more features.
 ```javascript
 var xbind = require('xbind');
 var rbind = require('xbind').r;
+var lbind = require('xbind').l;
 var sbind = require('xbind').s;
+```
+
+### lbind(ctx, fn, arg1, arg2,...)
+Return a new function like `Function.prototype.bind`
+
+* fn: *Function* | *String* If specified as a string, it must be a method of `ctx`
+* ctx: *Object* *Optional* Execution context for `fn`.
+
+```javascript
+var lbind = require('xbind').l;
+var path = require('path');
+console.log(lbind(path, 'resolve', '/a/b')('c.css'));
+// /a/b/c.css
+
 ```
 
 ### rbind(ctx, fn, arg1, arg2,...)
