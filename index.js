@@ -34,6 +34,9 @@ function xbind(start, deleteCount, c, f) {
         var s = start == null ? len : start;
         var d = deleteCount == null ? len : deleteCount;
         cargs.splice.apply(cargs, [s, d].concat(xargs));
+        // tricky case: should behave expectedly in strict mode
+        // i.e. any passed in context will be used
+        // only use `this` when no context object passed
         return fn.apply(args.hasOwnProperty('ctx') ? c : this, cargs);
     };
 }
