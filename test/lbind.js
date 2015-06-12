@@ -18,19 +18,23 @@ test('lbind(ctx, f)', function (t) {
     t.end();
 });
 
-test('lbind(f, value1)', function (t) {
+test('lbind(end, f, value1)', function (t) {
     var rarrayify = lbind(arrayify, 1);
     t.same(rarrayify(2,3), [1,2,3]);
+    rarrayify = lbind(1, arrayify, 1);
+    t.same(rarrayify(2,3), [1,2]);
     t.end();
 });
 
-test('lbind(f, value1, value2)', function (t) {
+test('lbind(end, f, value1, value2)', function (t) {
     var rarrayify = lbind(arrayify, 1, 2);
     t.same(rarrayify(3,4), [1,2,3,4]);
+    rarrayify = lbind(1, arrayify, 1, 2);
+    t.same(rarrayify(3,4), [1,2,3]);
     t.end();
 });
 
-test('lbind(ctx, "f", value1, value2)', function (t) {
+test('lbind(end, ctx, "f", value1, value2)', function (t) {
     var o = { arrayify: arrayify };
     var rarrayify = lbind(o, 'arrayify', 1, 2);
     t.same(rarrayify(3,4), [1,2,3,4]);

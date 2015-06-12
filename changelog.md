@@ -1,3 +1,7 @@
+# 0.3.0
+
+* all number arguments should be specified before any other arguments.
+
 # 0.2.4
 
 * `xbind.l`, `xbind.lbind`
