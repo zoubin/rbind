@@ -3,27 +3,6 @@
 var arrayify = require('arrayify-slice');
 module.exports = xbind;
 module.exports.l = module.exports.lbind = lbind;
-module.exports.r = module.exports.rbind = rbind;
-module.exports.s = module.exports.sbind = sbind;
-
-function xbind(start, c, f) {
-    var args = parseArgs(arguments);
-    var xargs = args.xargs;
-    f = args.fn;
-    c = args.ctx;
-    // where to append xargs
-    start = args.numbers[0];
-
-    return function () {
-        var fn = typeof f === 'string' ? c[f] : f;
-        var cargs = arrayify(arguments);
-        cargs.splice.apply(cargs, [start, cargs.length].concat(xargs));
-        // tricky case: should behave expectedly in strict mode
-        // i.e. any passed in context will be used
-        // only use `this` when no context object passed
-        return fn.apply(args.hasOwnProperty('ctx') ? c : this, cargs);
-    };
-}
 
 function lbind(end, c, f) {
     var args = parseArgs(arguments);
@@ -40,20 +19,7 @@ function lbind(end, c, f) {
     };
 }
 
-function rbind(c, f) {
-    var args = parseArgs(arguments);
-    var xargs = args.xargs;
-    f = args.fn;
-    c = args.ctx;
-
-    return function () {
-        var fn = typeof f === 'string' ? c[f] : f;
-        var cargs = arrayify(arguments).concat(xargs);
-        return fn.apply(args.hasOwnProperty('ctx') ? c : this, cargs);
-    };
-};
-
-function sbind(start, deleteCount, c, f) {
+function xbind(start, deleteCount, c, f) {
     var args = parseArgs(arguments);
     var xargs = args.xargs;
     f = args.fn;
@@ -64,7 +30,10 @@ function sbind(start, deleteCount, c, f) {
     return function () {
         var fn = typeof f === 'string' ? c[f] : f;
         var cargs = arrayify(arguments);
-        cargs.splice.apply(cargs, [start, deleteCount].concat(xargs));
+        var len = cargs.length;
+        var s = start == null ? len : start;
+        var d = deleteCount == null ? len : deleteCount;
+        cargs.splice.apply(cargs, [s, d].concat(xargs));
         return fn.apply(args.hasOwnProperty('ctx') ? c : this, cargs);
     };
 }
@@ -84,3 +53,4 @@ function parseArgs(args) {
     ret.xargs = args;
     return ret;
 }
+

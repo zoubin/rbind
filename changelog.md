@@ -1,3 +1,8 @@
+# 0.4.0
+
+* only export `xbind` and `lbind`
+* the new `xbind` handles all the previous `xbind`, `rbind`, `sbind` cases.
+
 # 0.3.0
 
 * all number arguments should be specified before any other arguments.

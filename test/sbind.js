@@ -1,5 +1,5 @@
 var test = require('tape');
-var sbind = require('..').sbind;
+var sbind = require('..');
 
 function arrayify() {
     var ret = [];
@@ -19,8 +19,8 @@ test('sbind(ctx, f)', function (t) {
 });
 
 test('sbind(start, f, value)', function (t) {
-    t.same(sbind(0, arrayify, 1)(2,3), [1,2,3]);
-    t.same(sbind(1, arrayify, 1)(2,3), [2,1,3]);
+    t.same(sbind(0, arrayify, 1)(2,3), [1]);
+    t.same(sbind(1, arrayify, 1)(2,3), [2,1]);
     t.same(sbind(2, arrayify, 1)(2,3), [2,3,1]);
     t.end();
 });

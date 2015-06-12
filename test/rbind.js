@@ -1,5 +1,5 @@
 var test = require('tape');
-var rbind = require('..').rbind;
+var rbind = require('..');
 
 function arrayify() {
     var ret = [];
