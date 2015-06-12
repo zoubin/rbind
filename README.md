@@ -30,7 +30,7 @@ Return a new function like `Function.prototype.bind`, except that arugments pass
 
 * fn: *Function* | *String* If specified as a string, it must be a method of `ctx`
 * ctx: *Object* *Optional* Execution context for `fn`.
-* end: *Number* *Optional* where to discard the passed in arguments
+* end: *Number* *Optional* where to discard the passed in arguments. No arguments will be discarded by default.
 
 ```javascript
 var lbind = require('xbind').l;
