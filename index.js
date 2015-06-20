@@ -1,59 +1,57 @@
-"use strict";
-
 var arrayify = require('arrayify-slice');
+var XArgs = require('./lib/xargs.js');
+
 module.exports = xbind;
-module.exports.l = module.exports.lbind = lbind;
+module.exports.append = append;
+module.exports.prepend = prepend;
 
-function lbind(end, c, f) {
-    var args = parseArgs(arguments);
-    var xargs = args.xargs;
-    f = args.fn;
-    c = args.ctx;
-    // where to discard original args
-    end = args.numbers[0];
+function xbind(f, c) {
+    var hasCtx = arguments.length > 1;
+    var ctx = arguments[1];
 
-    return function () {
+    var xfn = function xfn() {
+        var c = hasCtx ? ctx : this;
         var fn = typeof f === 'string' ? c[f] : f;
-        var cargs = arrayify(arguments, 0, end);
-        return fn.apply(args.hasOwnProperty('ctx') ? c : this, xargs.concat(cargs));
-    };
-}
-
-function xbind(start, deleteCount, c, f) {
-    var args = parseArgs(arguments);
-    var xargs = args.xargs;
-    f = args.fn;
-    c = args.ctx;
-    start = args.numbers[0];
-    deleteCount = args.numbers[1];
-
-    return function () {
-        var fn = typeof f === 'string' ? c[f] : f;
-        var cargs = arrayify(arguments);
-        var len = cargs.length;
-        var s = start == null ? len : start;
-        var d = deleteCount == null ? len : deleteCount;
-        cargs.splice.apply(cargs, [s, d].concat(xargs));
-        // tricky case: should behave expectedly in strict mode
-        // i.e. any passed in context will be used
-        // only use `this` when no context object passed
-        return fn.apply(args.hasOwnProperty('ctx') ? c : this, cargs);
-    };
-}
-
-function parseArgs(args) {
-    var ret = {};
-    args = arrayify(args);
-    var numbers = [];
-    while (typeof args[0] === 'number') {
-        numbers.push(args.shift());
+        var args = xfn.xargs.applyTransforms(arguments);
+        return fn.apply(c, args);
     }
-    ret.numbers = numbers;
-    if (typeof args[0] !== 'function') {
-        ret.ctx = args.shift();
-    }
-    ret.fn = args.shift();
-    ret.xargs = args;
-    return ret;
+
+    xfn.xargs = new XArgs(xfn);
+
+    return xfn;
 }
 
+function append() {
+    var info = parse.apply(null, arguments);
+    var fn = info[0];
+    var xargs = info[1];
+    if (xargs) {
+        fn.xargs.push.apply(fn.xargs, xargs);
+    }
+    return fn;
+}
+
+function prepend() {
+    var info = parse.apply(null, arguments);
+    var fn = info[0];
+    var xargs = info[1];
+    if (xargs) {
+        fn.xargs.splice.apply(fn.xargs, [0, 0].concat(xargs));
+    }
+    return fn;
+}
+
+function parse(end, xargs, f, c) {
+    var args = arrayify(arguments);
+    end = xargs = undefined;
+    if (typeof args[0] === 'number') {
+        end = args.shift();
+    }
+    if (Array.isArray(args[0])) {
+        xargs = args.shift();
+    }
+
+    var fn = xbind.apply(null, args);
+    fn.xargs.slice(0, end);
+    return [fn, xargs];
+}

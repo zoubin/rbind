@@ -1,48 +1,106 @@
 # xbind
 
-Like Function.prototype.bind, but append extra arguments rather than prepend them.
+Sugar way to adapt the arguments signature of functions.
 
 ## Usage
 
 ```javascript
 var xbind = require('xbind');
-var lbind = require('xbind').l;
+var path = require('path');
+console.log(
+    ['x.css', 'y.css'].map(
+        xbind(path.resolve) // return a new function
+            .xargs
+            .shift()    // get the first argument
+            .unshift('/path/to/css')    // prepend an argument
+            .unwrap()   // retrieve the new function
+    )
+);
+
+// [ '/path/to/css/x.css', '/path/to/css/y.css'  ]
 ```
 
-### xbind(start, deleteCount, ctx, fn, arg1, arg2,...)
+### xfn = xbind(fn, ctx)
 
-Return a new function with extra arguments appended.
+Return a new function with a `xargs` property, through which arguments can be changed.
 
-* **start**: *Number* *Optional* where to insert the extra arguments (`xargs`) `arg1,arg2,...`. If not specified, `xargs` will be appended.
-* **deleteCount**: *Number* *Optional* how many arguments form `start` should be deleted before inserting `xargs`. If not specified, all arguments from `start` will be deleted.
-* **ctx**: *Object* *Optional* Execution context for `fn`. If omitted, the context of `fn` will be that of the new function when called.
-* **fn**: *Function* | *String* If specified as a string, it must be a method of `ctx`
+#### fn
 
+Type: `Function`, `String`
+
+Function to be bound. If `String`, it will be treated as a method name of `ctx`
+
+#### ctx
+
+Type: `Object`
+`Optional`
+
+`this` value of `fn` when called.
+If not specified, `this` will be `this` of `xfn`.
+
+#### xfn.xargs
+
+Type: `Object`
+
+Right now you can use `.push`, `.pop`, `.shift`, `.unshift`, `.slice`, `.splice`, as methods on `Array.prototype` with the same name.
+
+
+### xfn = xbind.append(end, xargs, fn, ctx)
+
+The same as:
 
 ```javascript
 var xbind = require('xbind');
-var path = require('path');
-
-console.log(['x.css', 'y.css'].map(xbind(1, path, 'basename', '.css')));
-// [ 'x', 'y' ]
-
-console.log(xbind(path, 'basename', '.css')('x.css'));
-// x
+var xfn = xbind(fn, ctx);
+xfn.xargs
+    .slice(0, end)
+    .push.apply(xfn.xargs, xargs);
 
 ```
 
+```javascript
+var append = require('xbind').append;
+var path = require('path');
 
-### lbind(deleteFrom, ctx, fn, arg1, arg2,...)
-Return a new function like `Function.prototype.bind`, except that arugments passed in from index `deleteFrom` will be ignored.
+console.log(
+    ['x.css', 'y.css'].map(
+        append(1, ['.css'], path.basename)
+    )
+);
 
-* fn: *Function* | *String* If specified as a string, it must be a method of `ctx`
-* ctx: *Object* *Optional* Execution context for `fn`.
-* deleteFrom: *Number* *Optional* where to discard the passed in arguments. No arguments will be discarded by default.
+// [ 'x', 'y'  ]
+
+```
+
+#### xargs
+
+Type: `Array`
+`Optional`
+
+Extra arguments to append.
+
+#### end
+
+Type: `Number`
+`Optional`
+
+How many arguments to retrieve before append `xargs`.
+If not specified, all arguments will be retrieved.
+
+
+### xbind.prepend(end, xargs, fn, ctx)
+
+Same as `append`, except that `xargs` are prepended rather than appended.
 
 ```javascript
-var lbind = require('xbind').l;
+var prepend = require('xbind').prepend;
 var path = require('path');
-console.log(lbind(1, path, 'resolve', '/a/b')('c.css'));
-// /a/b/c.css
+
+console.log(
+    ['x.css', 'y.css'].map(
+        prepend(1, ['/path/to/css'], path.resolve)
+    )
+);
+// [ '/path/to/css/x.css', '/path/to/css/y.css'  ]
 
 ```
