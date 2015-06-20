@@ -1,3 +1,8 @@
+# 1.0.0
+
+* Use `XArgs` to refine `xbind`
+* Now exports `xbind`, `xbind.append`, `xbind.prepend`
+
 # 0.4.0
 
 * only export `xbind` and `lbind`
