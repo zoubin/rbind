@@ -1,7 +1,7 @@
 {
   "name": "xbind",
   "version": "1.0.0",
-  "description": "Like Function.prototype.bind, but bind arguments of the right part rather than the left",
+  "description": "Sugar way to adapt the arguments signature of functions",
   "main": "index.js",
   "scripts": {
     "test": "tape test/*.js | faucet"
