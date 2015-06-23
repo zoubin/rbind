@@ -45,18 +45,7 @@ Type: `Object`
 Right now you can use `.push`, `.pop`, `.shift`, `.unshift`, `.slice`, `.splice`, as methods on `Array.prototype` with the same name.
 
 
-### xfn = xbind.append(end, xargs, fn, ctx)
-
-The same as:
-
-```javascript
-var xbind = require('xbind');
-var xfn = xbind(fn, ctx);
-xfn.xargs
-    .slice(0, end)
-    .push.apply(xfn.xargs, xargs);
-
-```
+### append(end, xargs, fn, ctx)
 
 ```javascript
 var append = require('xbind').append;
@@ -69,6 +58,17 @@ console.log(
 );
 
 // [ 'x', 'y'  ]
+
+```
+
+The same as:
+
+```javascript
+var xbind = require('xbind');
+var xfn = xbind(fn, ctx);
+xfn.xargs
+    .slice(0, end)
+    .push.apply(xfn.xargs, xargs);
 
 ```
 
@@ -88,7 +88,7 @@ How many arguments to retrieve before append `xargs`.
 If not specified, all arguments will be retrieved.
 
 
-### xfn = xbind.prepend(end, xargs, fn, ctx)
+### prepend(end, xargs, fn, ctx)
 
 Same as `append`, except that `xargs` are prepended rather than appended.
 
@@ -105,7 +105,7 @@ console.log(
 
 ```
 
-### xfn = xbind.slice(from, to, fn, ctx)
+### slice(from, to, fn, ctx)
 
 Apply `Array.prototype.slice(from, to)` to arguments
 
@@ -122,7 +122,7 @@ console.log(
 
 ```
 
-### xfn = xbind.first(fn, ctx)
+### first(fn, ctx)
 
 Same as `.slice(0, 1, fn, ctx)`
 
