@@ -1,3 +1,9 @@
+# 1.0.1
+
+* add `.slice`
+* add `.first`
+
+
 # 1.0.0
 
 * Use `XArgs` to refine `xbind`

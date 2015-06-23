@@ -4,6 +4,8 @@ var XArgs = require('./lib/xargs.js');
 module.exports = xbind;
 module.exports.append = append;
 module.exports.prepend = prepend;
+module.exports.slice = slice;
+module.exports.first = first;
 
 function xbind(f, c) {
     var hasCtx = arguments.length > 1;
@@ -39,6 +41,25 @@ function prepend() {
         fn.xargs.splice.apply(fn.xargs, [0, 0].concat(xargs));
     }
     return fn;
+}
+
+function slice(from, to, f, c) {
+    var args = arrayify(arguments);
+    from = to = undefined;
+    if (typeof args[0] === 'number') {
+        from = args.shift();
+    }
+    if (typeof args[0] === 'number') {
+        to = args.shift();
+    }
+    var fn = xbind.apply(null, args);
+    fn.xargs.slice(from, to);
+    return fn;
+}
+
+function first() {
+    var args = arrayify(arguments);
+    return slice.apply(null, [0, 1].concat(args));
 }
 
 function parse(end, xargs, f, c) {
