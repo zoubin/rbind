@@ -1,6 +1,6 @@
 {
   "name": "xbind",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sugar way to adapt the arguments signature of functions",
   "main": "index.js",
   "scripts": {
