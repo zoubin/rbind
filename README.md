@@ -139,3 +139,9 @@ console.log(
 
 
 ```
+
+
+### identity(o)
+
+Just return a function that returns `o`
+

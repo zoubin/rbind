@@ -6,6 +6,7 @@ module.exports.append = append;
 module.exports.prepend = prepend;
 module.exports.slice = slice;
 module.exports.first = first;
+module.exports.identity = identity;
 
 function xbind(f, c) {
     var hasCtx = arguments.length > 1;
@@ -31,6 +32,12 @@ function append() {
         fn.xargs.push.apply(fn.xargs, xargs);
     }
     return fn;
+}
+
+function identity(o) {
+    return function () {
+        return o;
+    };
 }
 
 function prepend() {

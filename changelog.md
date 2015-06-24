@@ -1,3 +1,7 @@
+# 1.0.2
+
+* add `.identity`
+
 # 1.0.1
 
 * add `.slice`
