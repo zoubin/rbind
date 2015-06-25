@@ -1,6 +1,6 @@
-# 1.1.0
+# 2.0.0
 
-* Incompatible with `1.0.x`
+* Incompatible with `1.x.x`
 * `.identity(o)`
 * `xfn.xargs` to select arguments
 * `xfn.first`, `xfn.last` to select the first or the last argument
