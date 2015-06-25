@@ -4,7 +4,7 @@
   "description": "Sugar way to adapt the arguments signature of functions",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js | faucet"
+    "test": "tape test/*.js"
   },
   "repository": {
     "type": "git",
@@ -13,9 +13,7 @@
   "keywords": [
     "function",
     "bind",
-    "xbind",
-    "sbind",
-    "rbind"
+    "xbind"
   ],
   "author": "zoubin",
   "license": "MIT",
@@ -24,7 +22,6 @@
   },
   "homepage": "https://github.com/zoubin/xbind#readme",
   "devDependencies": {
-    "faucet": "0.0.1",
     "tape": "^4.0.0"
   },
   "dependencies": {

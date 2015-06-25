@@ -7,30 +7,88 @@ Sugar way to adapt the arguments signature of functions.
 ```javascript
 var xbind = require('xbind');
 var path = require('path');
-console.log(
-    ['x.css', 'y.css'].map(
-        xbind(path.resolve) // return a new function
-            .xargs
-            .shift()    // get the first argument
-            .unshift('/path/to/css')    // prepend an argument
-            .unwrap()   // retrieve the new function
-    )
-);
 
-// [ '/path/to/css/x.css', '/path/to/css/y.css'  ]
+function arrayify() {
+    var ret = [];
+    for (var i = 0, len = arguments.length; i < len; i++) {
+        ret.push(arguments[i]);
+    }
+    return ret;
+}
+
+console.log(
+    '`arrayify` just make an array from arguments',
+    arrayify(0,1,2,3)
+)
+
+console.log(
+    'use the first argument',
+    xbind(arrayify).xargs(0)(0,1,2,3)
+)
+
+console.log(
+    'use the first argument',
+    xbind(arrayify).first()(0,1,2,3)
+)
+
+console.log(
+    'use the last argument',
+    xbind(arrayify).last()(0,1,2,3)
+)
+
+console.log(
+    'use the first and third arguments',
+    xbind(arrayify).xargs(0,2)(0,1,2,3),
+    xbind(arrayify).xargs([0,2])(0,1,2,3)
+)
+
+console.log(
+    'append arguments 4,5',
+    xbind(arrayify).push(4,5)(0,1,2,3)
+)
+
+console.log(
+    'prepend arguments 4,5',
+    xbind(arrayify).unshift(4,5)(0,1,2,3)
+)
+
+console.log(
+    'slice arguments 1,3',
+    xbind(arrayify).slice(1,3)(0,1,2,3)
+)
+
+console.log(
+    'filter arguments',
+    xbind(arrayify).xargs(1,5).filter(Boolean)(0,1,2,3)
+)
+
 ```
 
-### xfn = xbind(fn, ctx)
+output:
+
+```
+`arrayify` just make an array from arguments [ 0, 1, 2, 3  ]
+use the first argument [ 0  ]
+use the first argument [ 0  ]
+use the last argument [ 3  ]
+use the first and third arguments [ 0, 2  ] [ 0, 2  ]
+append arguments 4,5 [ 0, 1, 2, 3, 4, 5  ]
+prepend arguments 4,5 [ 4, 5, 0, 1, 2, 3  ]
+slice arguments 1,3 [ 1, 2  ]
+filter arguments [ 1  ]
+```
+
+## xfn = xbind(fn, ctx)
 
 Return a new function with a `xargs` property, through which arguments can be changed.
 
-#### fn
+### fn
 
 Type: `Function`, `String`
 
 Function to be bound. If `String`, it will be treated as a method name of `ctx`
 
-#### ctx
+### ctx
 
 Type: `Object`
 `Optional`
@@ -38,110 +96,26 @@ Type: `Object`
 `this` value of `fn` when called.
 If not specified, `this` will be `this` of `xfn`.
 
-#### xfn.xargs
+## operations
 
-Type: `Object`
+### xfn.xargs(index1, index2)
 
-Right now you can use `.push`, `.pop`, `.shift`, `.unshift`, `.slice`, `.splice`, as methods on `Array.prototype` with the same name.
+Select arguments with `index1, index2`
 
+### xfn.first()
 
-### append(end, xargs, fn, ctx)
+Select the first argument
 
-```javascript
-var append = require('xbind').append;
-var path = require('path');
+### xfn.last()
 
-console.log(
-    ['x.css', 'y.css'].map(
-        append(1, ['.css'], path.basename)
-    )
-);
+Select the last argument
 
-// [ 'x', 'y'  ]
+### Array methods
 
-```
-
-The same as:
-
-```javascript
-var xbind = require('xbind');
-var xfn = xbind(fn, ctx);
-xfn.xargs
-    .slice(0, end)
-    .push.apply(xfn.xargs, xargs);
-
-```
-
-#### xargs
-
-Type: `Array`
-`Optional`
-
-Extra arguments to append.
-
-#### end
-
-Type: `Number`
-`Optional`
-
-How many arguments to retrieve before append `xargs`.
-If not specified, all arguments will be retrieved.
+You can operate the argument list using `.push`, `.pop`, `.shift`, `.unshift`, `.slice`, `.splice`, `.filter`, `.map`, `.reduce`, as the argument list is `Array`.
 
 
-### prepend(end, xargs, fn, ctx)
-
-Same as `append`, except that `xargs` are prepended rather than appended.
-
-```javascript
-var prepend = require('xbind').prepend;
-var path = require('path');
-
-console.log(
-    ['x.css', 'y.css'].map(
-        prepend(1, ['/path/to/css'], path.resolve)
-    )
-);
-// [ '/path/to/css/x.css', '/path/to/css/y.css'  ]
-
-```
-
-### slice(from, to, fn, ctx)
-
-Apply `Array.prototype.slice(from, to)` to arguments
-
-```javascript
-var slice = require('..').slice;
-var path = require('path');
-
-console.log(
-    ['x.css', 'y.css'].map(
-        slice(0, 1, path.basename)
-    )
-);
-// [ 'x.css', 'y.css'  ]
-
-```
-
-### first(fn, ctx)
-
-Same as `.slice(0, 1, fn, ctx)`
-
-```javascript
-var first = require('..').first;
-var path = require('path');
-
-console.log(
-    ['x.css', 'y.css'].map(
-        first(path.basename)
-    )
-);
-// [ 'x.css', 'y.css'  ]
-
-
-```
-
-
-### identity(o)
+## xbind.identity(o)
 
 Just return a function that returns `o`
 

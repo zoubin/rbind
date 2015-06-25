@@ -1,3 +1,11 @@
+# 1.1.0
+
+* Incompatible with `1.0.x`
+* `.identity(o)`
+* `xfn.xargs` to select arguments
+* `xfn.first`, `xfn.last` to select the first or the last argument
+* `xfn` has methods `.push`, `.pop`, `.shift`, `.unshift`, `.slice`, `.splice`, `.filter`, `.map`, `.reduce`, as `Array.prototype`.
+
 # 1.0.2
 
 * add `.identity`
