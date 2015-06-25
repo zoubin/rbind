@@ -6,7 +6,6 @@ Sugar way to adapt the arguments signature of functions.
 
 ```javascript
 var xbind = require('xbind');
-var path = require('path');
 
 function arrayify() {
     var ret = [];
