@@ -1,5 +1,4 @@
 var xbind = require('..');
-var path = require('path');
 
 function arrayify() {
     var ret = [];
